@@ -67,7 +67,7 @@ window.findNQueensSolution = function(n) {
     for (var c = 0; c < n; c++) {
       newBoard.togglePiece(row, c);
       
-      if (!newBoard.hasAnyQueensConflicts()) {
+      if (!newBoard.hasAnyQueenConflictsOn(row, c)) {
         placeQueens(row + 1);
       } 
       newBoard.togglePiece(c);
@@ -97,7 +97,7 @@ window.countNQueensSolutions = function(n) {
     
     for (var i = 0; i < n; i++) {
       newBoard.togglePiece(row, i);
-      if (!newBoard.hasAnyQueenConflictsOn(row, i)) {
+      if (!newBoard.hasAnyQueensConflicts()) {
         countSolutions(row + 1);
       } 
       newBoard.togglePiece(row, i);
