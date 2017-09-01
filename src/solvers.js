@@ -62,21 +62,38 @@ window.countNRooksSolutions = function(n) {
 window.findNQueensSolution = function(n) {
   var solution = [];
   var newBoard = new Board({'n': n});
-
-  var placeQueens = function(row) {
-    for (var c = 0; c < n; c++) {
-      newBoard.togglePiece(row, c);
-      
-      if (!newBoard.hasAnyQueenConflictsOn(row, c)) {
-        placeQueens(row + 1);
-      } 
-      newBoard.togglePiece(c);
+  
+  var findSolution = function(row) {
+    if (row === n) {
+      return;
+    }
+    
+    for (var i = 0; i < n; i++) {
+      newBoard.togglePiece(row, i);
+      if (newBoard.hasAnyQueenConflictsOn(row, i)) {
+        newBoard.togglePiece(row, i);
+      } else {
+        findSolution(row + 1);
+      }
     }
   };
   
+  findSolution(0);
+
+  // var placeQueens = function(row) {
+  //   for (var c = 0; c < n; c++) {
+  //     newBoard.togglePiece(row, c);
+      
+  //     if (!newBoard.hasAnyQueenConflictsOn(row, c)) {
+  //       placeQueens(row + 1);
+  //     } 
+  //     newBoard.togglePiece(c);
+  //   }
+  // };
+  
   solution = newBoard.rows();
 
-  placeQueens(0);
+  // placeQueens(0);
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
